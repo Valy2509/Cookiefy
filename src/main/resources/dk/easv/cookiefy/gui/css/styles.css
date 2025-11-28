@@ -1,0 +1,31 @@
+.root{
+    text-color: rgb(207, 151, 94);
+}
+
+.title-bar{
+    -fx-background-color: rgba(12, 5, 2, 0.22);
+}
+
+.body{
+    -fx-background-image: url("../imgs/bg.png");
+    -fx-background-size: 100% 100%;
+}
+
+.label{
+    -fx-text-fill: text-color;
+}
+
+.text-field{
+    -fx-background-color: rgba(12, 5, 2, 0.40);
+    -fx-text-fill: text-color;
+    -fx-prompt-text-fill: text-color;
+}
+
+.button{
+    -fx-background-color: rgb(27, 6, 5);
+    -fx-text-fill: text-color;
+}
+
+.button:hover{
+    -fx-background-color: rgb(48, 11, 10);
+}
