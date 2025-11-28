@@ -1,14 +1,38 @@
 .root{
     text-color: rgb(207, 151, 94);
+    left-pane-color: rgb(27, 6, 5);
 }
 
 .title-bar{
-    -fx-background-color: rgba(12, 5, 2, 0.22);
+    -fx-background-color: left-pane-color;
 }
 
-.body{
+.title-bar-darken{
+    -fx-background-color: rgba(107, 78, 48, 0.24)
+}
+
+#body{
     -fx-background-image: url("../imgs/bg.png");
     -fx-background-size: 100% 100%;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.left-pane{
+    -fx-background-color: left-pane-color;
+}
+
+.left-pane .button{
+    -fx-background-color: rgb(114, 60, 26);
+}
+
+#player .button{
+    -fx-background-radius: 100%;
+}
+
+#separator{
+    -fx-background-color: rgb(153, 98, 57);
+    -fx-background-radius: 10px;
 }
 
 .label{

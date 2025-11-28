@@ -2,19 +2,70 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox fx:id="root" alignment="CENTER" prefHeight="448.0" prefWidth="415.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.MainController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<VBox fx:id="root" alignment="CENTER" prefHeight="494.0" prefWidth="850.0" style="-fx-border-radius: 10px;" styleClass="body" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.MainController">
    <children>
-      <TextField fx:id="emailInput" promptText="email" />
-      <TextField fx:id="passInput" promptText="pass" />
-      <Button layoutX="196.0" layoutY="203.0" mnemonicParsing="false" onAction="#tryRegister" text="register" />
-      <Button mnemonicParsing="false" onAction="#tryLogIn" text="login" />
-      <Label fx:id="playingLabel" text="Nothing is playing rn" />
-      <Button mnemonicParsing="false" onAction="#chooseAudio" text="Choose Audio" />
-      <Button mnemonicParsing="false" onAction="#playAudio" text="Play" />
+      <HBox prefWidth="850.0" styleClass="title-bar">
+         <children>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" prefWidth="850.0" styleClass="title-bar-darken" HBox.hgrow="SOMETIMES">
+                <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="53.0" text="Cookiefy">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Region prefWidth="233.0" HBox.hgrow="ALWAYS" />
+               <children>
+                   <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="25.0" prefWidth="28.0" style="-fx-background-radius: 0; -fx-background-insets: 0;" text="—" />
+                   <Button fx:id="minMaxBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toggleMaximized" prefHeight="25.0" prefWidth="28.0" style="-fx-background-radius: 0; -fx-background-insets: 0;" text="❐" />
+                   <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="28.0" style="-fx-background-radius: 0; -fx-background-insets: 0;" text="✖" />
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding></HBox>
+         </children></HBox>
+      <HBox id="body" prefHeight="412.0" prefWidth="715.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="412.0" prefWidth="144.0" spacing="10.0" styleClass="left-pane">
+               <children>
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadHomePage" prefWidth="70.0" text="Home" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadDiscover" prefWidth="70.0" text="Discover" />
+                  <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadLibrary" prefWidth="70.0" text="Library" />
+                  <Region prefHeight="7.0" prefWidth="144.0" />
+                  <Pane id="separator" maxWidth="-Infinity" prefHeight="6.0" prefWidth="119.0" />
+                  <VBox id="player" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fitHeight="129.0" fitWidth="130.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@imgs/notFound.jpg" />
+                           </image></ImageView>
+                        <Label text="Nothing is playing" />
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="⏪" />
+                              <Button mnemonicParsing="false" text="▶">
+                                 <padding>
+                                    <Insets bottom="4.0" left="15.0" right="15.0" top="4.0" />
+                                 </padding>
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font></Button>
+                              <Button mnemonicParsing="false" text="⏩" />
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding></VBox>
+            <VBox fx:id="content" prefHeight="469.0" prefWidth="646.0" HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
    </children>
 </VBox>
