@@ -1,6 +1,8 @@
 package dk.easv.cookiefy.bll;
 
+import dk.easv.cookiefy.be.Song;
 import dk.easv.cookiefy.be.User;
+import dk.easv.cookiefy.dal.ITunesDAO;
 import dk.easv.cookiefy.dal.UserDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,44 +12,33 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logic {
-    private UserDAO userDAO = new UserDAO();
+    private ITunesDAO iTunesDAO = new ITunesDAO();
+
     private MediaPlayer mediaPlayer;
-    private StringProperty duration = new SimpleStringProperty("");
-    public void playAudio(File f){
+
+    public List<Song> searchSongs(String query) {
+        try{
+            if (query.isBlank() || query == null) return List.of();
+            return iTunesDAO.search(query);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void playAudio(String url){
         if (mediaPlayer != null){
             mediaPlayer.stop();
+            mediaPlayer.dispose();
         }
-        if(f != null){
-            mediaPlayer = new MediaPlayer(new Media(f.toURI().toString()));
+        if(url != null){
+            mediaPlayer = new MediaPlayer(new Media(url));
             mediaPlayer.play();
-            mediaPlayer.setOnReady(() -> {
-                duration.setValue(Math.round((mediaPlayer.getMedia().getDuration().toMinutes()) * 100.0) / 100.0 + "");
-            });
         }
 
     }
-    public StringProperty getDuration(){
-        return duration;
-    }
-
-
-    public User logIn(String email, String pass) throws Exception {
-        User user = userDAO.getUserByEmail(email);
-        if (user == null) throw new Exception("User not found");
-        if (BCrypt.checkpw(pass, user.getPassword())) {
-            return user;
-        }else{
-            throw new Exception("Incorrect password");
-        }
-    }
-
-    public void registerUser(String email, String pass) throws Exception {
-        String hash =  BCrypt.hashpw(pass, BCrypt.gensalt());
-        userDAO.registerUser(email, hash);
-    }
-
-
 
 }

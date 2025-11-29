@@ -64,7 +64,7 @@
                <padding>
                   <Insets top="20.0" />
                </padding></VBox>
-            <VBox fx:id="content" prefHeight="469.0" prefWidth="646.0" HBox.hgrow="ALWAYS" />
+            <VBox fx:id="content" alignment="CENTER" prefHeight="469.0" prefWidth="646.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>

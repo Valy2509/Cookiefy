@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <Label text="Discover tab" />
-    </children>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" spacing="10.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.DiscoverController">
+   <children>
+      <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
+         <children>
+            <TextField fx:id="searchInput" maxWidth="-Infinity" prefHeight="25.0" prefWidth="241.0" promptText="Start typing to search.." />
+            <Button mnemonicParsing="false" onAction="#searchSong" text="Search" />
+         </children>
+      </HBox>
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="281.0" prefWidth="449.0">
+         <content>
+            <VBox id="song-container-inside" fx:id="songsContainer" spacing="10" />
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets left="20.0" right="20.0" top="20.0" />
+   </padding>
 </VBox>

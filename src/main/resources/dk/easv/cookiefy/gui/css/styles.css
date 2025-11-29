@@ -18,6 +18,14 @@
     -fx-border-radius: 10px;
 }
 
+#song-body{
+    -fx-background-color: rgb(153, 98, 57);
+}
+
+.scroll-pane > .viewport{
+    -fx-background-color: rgb(114, 60, 26);
+}
+
 .left-pane{
     -fx-background-color: left-pane-color;
 }

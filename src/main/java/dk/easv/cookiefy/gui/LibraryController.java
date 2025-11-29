@@ -27,6 +27,7 @@ public class LibraryController implements Initializable {
         fileChooser.setTitle("Load Audio File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Audio File", "*.mp3", "*.wav"));
         fileChooser.showOpenDialog(stage);
+        updateSongList("");
     }
 
     public void updateSongList(String fxmlPath){
