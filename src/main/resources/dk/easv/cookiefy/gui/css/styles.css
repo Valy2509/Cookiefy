@@ -1,10 +1,10 @@
 .root{
-    text-color: rgb(207, 151, 94);
-    left-pane-color: rgb(27, 6, 5);
+    -fx-text-color: rgb(207, 151, 94);
+    -fx-left-pane-color: rgb(27, 6, 5);
 }
 
 .title-bar{
-    -fx-background-color: left-pane-color;
+    -fx-background-color: -fx-left-pane-color;
 }
 
 .title-bar-darken{
@@ -19,15 +19,82 @@
 }
 
 #song-body{
-    -fx-background-color: rgb(153, 98, 57);
+    -fx-background-color: rgba(114, 60, 26, .4);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-pref-height: 40px;
+}
+
+#song-body .action-button{
+    -fx-background-radius: 50%;
+    -fx-min-width: 30px;
+    -fx-min-height: 30px;
+    -fx-max-width: 30px;
+    -fx-max-height: 30px;
+    -fx-font-size: 10px;
+    -fx-background-color: -fx-left-pane-color;
+}
+
+#song-body .action-button:hover{
+    -fx-background-color: rgb(48, 11, 10);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+#song-body #titleLabel{
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.preview-tag{
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 4px;
+    -fx-padding: 2px 5px 2px 5px;
+    -fx-opacity: .8;
+}
+
+.scroll-pane{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
 .scroll-pane > .viewport{
+    -fx-background-color: rgb(27, 6, 5, .2);
+}
+
+#song-container-inside{
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.scroll-pane .scroll-bar:vertical{
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-pane .scroll-bar .track{
+    -fx-background-color: rgba(12, 5, 2, .4);
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane .scroll-bar .thumb{
     -fx-background-color: rgb(114, 60, 26);
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane .scroll-bar .thumb:hover{
+    -fx-background-color: rgb(153, 98, 57);
+}
+
+.scroll-pane .scroll-bar .increment-button, scroll-pane .scroll-bar .increment-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
 
 .left-pane{
-    -fx-background-color: left-pane-color;
+    -fx-background-color: -fx-left-pane-color;
 }
 
 .left-pane .button{
@@ -43,21 +110,94 @@
     -fx-background-radius: 10px;
 }
 
+.list-view{
+    -fx-background-color: rgba(153, 98, 57, .7);
+    -fx-padding: 5px;
+}
+
+.list-view .scroll-bar:vertical, .list-view .scroll-bar:horizontal{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.list-view .scroll-bar .thumb{
+    -fx-background-color: rgb(114, 60, 26);
+    -fx-background-radius: 10px;
+}
+
+.list-view .scroll-bar .thumb:hover{
+    -fx-background-color: rgb(153, 98, 57);
+}
+
+.list-view .scroll-bar .increment-button, .list-view .scroll-bar .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.list-cell{
+    -fx-background-color: rgba(114, 60, 26, .3);
+    -fx-text-fill: rgb(207, 151, 94);
+    -fx-padding: 5px;
+    -fx-border-color: transparent;
+}
+
+.list-cell:odd{
+    -fx-background-color: rgba(114, 60, 26, .5);
+}
+
+.list-cell:filled:hover{
+    -fx-background-color: rgb(153, 98, 57);
+}
+
+.list-cell:filled:selected{
+    -fx-background-color: rgb(207, 151, 94);
+    -fx-text-fill: rgb(27, 6, 5);
+}
+
+.slider .track{
+    -fx-background-color: rgb(168, 122, 84);
+}
+
+.slider .thumb{
+    -fx-background-color: rgb(207, 151, 94);
+    -fx-background-radius: 10px;
+}
+
+.slider .thumb:hover{
+    -fx-background-color: rgb(255, 200, 150);
+}
+
 .label{
-    -fx-text-fill: text-color;
+    -fx-text-fill: -fx-text-color;
 }
 
 .text-field{
     -fx-background-color: rgba(12, 5, 2, 0.40);
-    -fx-text-fill: text-color;
-    -fx-prompt-text-fill: text-color;
+    -fx-text-fill: -fx-text-color;
+    -fx-prompt-text-fill: -fx-text-color;
 }
 
 .button{
     -fx-background-color: rgb(27, 6, 5);
-    -fx-text-fill: text-color;
+    -fx-text-fill: -fx-text-color;
 }
 
 .button:hover{
     -fx-background-color: rgb(48, 11, 10);
+}
+
+.dialog.dialog-pane{
+    -fx-background-color: rgb(153, 98, 57);
+}
+
+.dialog .header-panel{
+    -fx-background-color: rgb(136, 88, 50);
+}
+
+.dialog.dialog-pane .label{
+    -fx-text-fill: rgb(27, 6, 5);
+}
+
+.dialog .header-panel .label{
+    -fx-text-fill: rgb(27, 6, 5);
 }

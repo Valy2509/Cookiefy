@@ -1,17 +1,19 @@
-package dk.easv.cookiefy.gui;
+package dk.easv.cookiefy.gui.components;
 
 import dk.easv.cookiefy.be.Song;
-import dk.easv.cookiefy.bll.Logic;
+import dk.easv.cookiefy.gui.MainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 public class SongController {
     @FXML private Label titleLabel;
 
     private Song song;
-    private Logic logic = new Logic();
+    private MainController mainController;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     public void setSong(Song song) {
         this.song = song;
@@ -19,8 +21,8 @@ public class SongController {
     }
 
     @FXML public void playSong() {
-        if (song != null || song.getPreviewUrl().isBlank()) {
-            logic.playAudio(song.getPreviewUrl());
+        if (song != null && mainController != null) {
+            mainController.playSong(song);
         }
     }
 }

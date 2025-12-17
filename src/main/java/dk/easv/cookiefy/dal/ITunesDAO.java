@@ -27,9 +27,18 @@ public class ITunesDAO {
         List<Song> songs = new ArrayList<>();
         JsonNode root = mapper.readTree(json).get("results");
 
+        if (root == null || !root.isArray()) return songs;
+
         for (JsonNode item : root) {
-            if(item.path("trackName").asText(null) == null || item.path("trackName").asText(null).isBlank()) continue;
-            songs.add(new Song(item.path("trackName").asText(""), item.path("artistName").asText(""), item.path("artworkUrl100").asText(""), item.path("previewUrl").asText("")));
+            String type = item.path("wrapperType").asText("");
+            String kind = item.path("kind").asText("");
+            String trackName =  item.path("trackName").asText(null);
+            String previewUrl = item.path("previewUrl").asText(null);
+
+            if ("track".equals(type) && "song".equals(kind) && trackName != null && !trackName.isBlank() && previewUrl != null && !previewUrl.isBlank()) {
+                songs.add(new Song(trackName, item.path("artistName").asText("Unknown Artist"), item.path("artworkUrl100").asText(""), previewUrl));
+            }
+
         }
         return songs;
     }

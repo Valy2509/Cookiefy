@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="257.0" prefWidth="374.0" styleClass="body" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.RegController">
+<VBox id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="257.0" prefWidth="374.0" styleClass="body" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.auth.RegController">
     <children>
         <HBox fx:id="titleBar" alignment="CENTER_RIGHT" styleClass="title-bar">
             <children>
@@ -29,18 +29,23 @@
             </HBox>
             </children>
         </HBox>
-        <VBox alignment="CENTER" prefHeight="375.0" prefWidth="443.0" spacing="15.0" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" prefHeight="375.0" prefWidth="443.0" VBox.vgrow="ALWAYS">
             <children>
-            <TextField layoutX="123.0" layoutY="41.0" maxWidth="-Infinity" promptText="Name" />
-                <TextField maxWidth="-Infinity" promptText="E-mail" />
-                <PasswordField maxWidth="-Infinity" promptText="Password" />
-                <HBox alignment="CENTER">
-                    <children>
-                        <Label text="Have an account? Log in" />
-                        <Hyperlink onAction="#changeToLogIn" text="here" />
-                    </children>
-                </HBox>
-                <Button mnemonicParsing="false" text="Create Account" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="nameInput" maxWidth="-Infinity" promptText="Username" />
+                      <TextField fx:id="emailInput" maxWidth="-Infinity" promptText="E-mail" />
+                      <PasswordField fx:id="passInput" maxWidth="-Infinity" promptText="Password" />
+                      <HBox alignment="CENTER">
+                          <children>
+                              <Label text="Have an account? Log in" />
+                              <Hyperlink onAction="#changeToLogIn" text="here" />
+                          </children>
+                      </HBox>
+                      <Button mnemonicParsing="false" onAction="#createAccount" text="Create Account" />
+               </children>
+            </VBox>
+            <Label fx:id="messageLabel" />
             </children>
         </VBox>
     </children>

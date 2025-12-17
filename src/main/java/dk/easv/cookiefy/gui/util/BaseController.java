@@ -1,11 +1,9 @@
-package dk.easv.cookiefy.gui;
+package dk.easv.cookiefy.gui.util;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-
-import java.awt.*;
 
 public abstract class BaseController {
     private double posX;

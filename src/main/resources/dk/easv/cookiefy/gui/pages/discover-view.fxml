@@ -4,11 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" spacing="10.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.DiscoverController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" spacing="10.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.tabs.DiscoverController">
    <children>
       <HBox alignment="CENTER" prefWidth="200.0" spacing="5.0">
          <children>
-            <TextField fx:id="searchInput" maxWidth="-Infinity" prefHeight="25.0" prefWidth="241.0" promptText="Start typing to search.." />
+            <TextField fx:id="searchInput" maxWidth="-Infinity" prefHeight="25.0" prefWidth="241.0" promptText="Search..." />
             <Button mnemonicParsing="false" onAction="#searchSong" text="Search" />
          </children>
       </HBox>
