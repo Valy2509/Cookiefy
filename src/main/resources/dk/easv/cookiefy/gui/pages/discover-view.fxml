@@ -12,7 +12,7 @@
             <Button mnemonicParsing="false" onAction="#searchSong" text="Search" />
          </children>
       </HBox>
-      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="281.0" prefWidth="449.0">
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" prefHeight="281.0" prefWidth="449.0">
          <content>
             <VBox id="song-container-inside" fx:id="songsContainer" spacing="10" />
          </content>

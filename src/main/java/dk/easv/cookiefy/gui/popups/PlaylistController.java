@@ -55,6 +55,4 @@ public class PlaylistController extends BaseController implements Initializable 
             }
         }
     }
-
-
 }

@@ -3,12 +3,10 @@ package dk.easv.cookiefy.bll;
 import dk.easv.cookiefy.be.Playlist;
 import dk.easv.cookiefy.be.Song;
 import dk.easv.cookiefy.be.User;
-import dk.easv.cookiefy.dal.ITunesDAO;
-import dk.easv.cookiefy.dal.PlaylistDAO;
-import dk.easv.cookiefy.dal.SongDAO;
-import dk.easv.cookiefy.dal.UserDAO;
+import dk.easv.cookiefy.dal.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -18,11 +16,18 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The BLL class
+ * Acts as the bridge between gui and dal
+ * Manages app state
+ */
+
 public class Logic {
     private ITunesDAO iTunesDAO = new ITunesDAO();
     private UserDAO userDAO = new UserDAO();
     private SongDAO songDAO = new SongDAO();
     private PlaylistDAO playlistDAO = new PlaylistDAO();
+    private HistoryDAO historyDAO = new HistoryDAO();
 
     private MediaPlayer mediaPlayer;
     private ObjectProperty<Song> currSong = new SimpleObjectProperty<Song>();
@@ -51,23 +56,23 @@ public class Logic {
         }
     }
 
-    public void playQueue(List<Song> songs, int startIndex) {
+    public void playQueue(List<Song> songs, int startIndex, User user) {
         this.currIndex = startIndex;
         this.queue = songs;
-        playInternal();
+        playInternal(user);
     }
 
-    public void nextSong() {
+    public void nextSong(User user) {
         if (queue != null && currIndex < queue.size() - 1) {
             currIndex++;
-            playInternal();
+            playInternal(user);
         }
     }
 
-    public void prevSong() {
+    public void prevSong(User user) {
         if (queue != null && currIndex > 0) {
             currIndex--;
-            playInternal();
+            playInternal(user);
         }else{
             if(mediaPlayer != null){
                 mediaPlayer.seek(Duration.ZERO);
@@ -75,20 +80,23 @@ public class Logic {
         }
     }
 
-    public void playInternal(){
+    public void playInternal(User user){
         if (queue == null || currIndex < 0 || currIndex >= queue.size()) return;
         Song song = queue.get(currIndex);
         currSong.set(song);
         playAudio(song.getPath());
+        addRecentSong(song, user);
         if(mediaPlayer != null){
             mediaPlayer.setOnEndOfMedia(()->{
                currIndex++;
-               playInternal();
+               playInternal(user);
             });
         }
     }
 
-    public void playSingleSong(Song song){
+
+
+    public void playSingleSong(Song song, User user) {
         this.queue = null;
         this.currIndex = -1;
         this.currSong.set(song);
@@ -104,6 +112,8 @@ public class Logic {
         if (!url.isEmpty()){
             playAudio(url);
         }
+
+        addRecentSong(song, user);
 
         if (mediaPlayer != null){
             mediaPlayer.setOnEndOfMedia(null);
@@ -144,8 +154,6 @@ public class Logic {
         }
         return false;
     }
-
-
 
     public void RegisterNewUser(String username, String email, String password) throws Exception {
         if (username == null || !username.matches("^[A-Za-z0-9]+$")){
@@ -251,6 +259,42 @@ public class Logic {
         if (selectedPlayList == null) return;
         try{
             playlistDAO.deletePlaylist(selectedPlayList);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addRecentSong(Song song, User user){
+        if(song == null || user == null) return;
+        if(song.getId() <= 0) return;
+        try {
+            historyDAO.addToHistory(song, user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Song> getRecents(User user) {
+        if(user  == null) return null;
+        return historyDAO.getRecentSongs(user);
+    }
+
+    public void reorderPlaylist(Playlist selectedPlaylist, ObservableList<Song> items) {
+        if (selectedPlaylist == null || items == null) return;
+        if(queue != null && currSong.get() != null) {
+            Song currPlaying = currSong.get();
+            for(int i = 0; i < items.size(); i++) {
+                Song s = items.get(i);
+
+                if (s == currPlaying || (s.getId() > 0 && s.getId() == currPlaying.getId())) {
+                    this.queue = items;
+                    this.currIndex = i;
+                    break;
+                }
+            }
+        }
+        try{
+            playlistDAO.updatePlOrder(selectedPlaylist, items);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

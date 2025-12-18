@@ -2,6 +2,7 @@ package dk.easv.cookiefy.dal;
 
 import dk.easv.cookiefy.be.Playlist;
 import dk.easv.cookiefy.be.Song;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,6 +103,22 @@ public class PlaylistDAO {
                 ps.setInt(1, selectedPlayList.getId());
                 ps.executeUpdate();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePlOrder(Playlist selectedPlaylist, ObservableList<Song> items) {
+        try(Connection con = connectionManager.getConnection()){
+            PreparedStatement ps = con.prepareStatement("UPDATE Playlist_Songs SET Position = ? WHERE Playlist_ID = ? AND Song_ID = ?");
+            for (int i = 0; i < items.size(); i++) {
+                Song song = items.get(i);
+                ps.setInt(1, i);
+                ps.setInt(2, selectedPlaylist.getId());
+                ps.setInt(3, song.getId());
+                ps.addBatch();
+            }
+            ps.executeBatch();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

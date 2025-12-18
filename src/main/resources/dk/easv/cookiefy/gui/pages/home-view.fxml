@@ -3,8 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="489.0" spacing="10.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.tabs.HomeController">
    <children>
       <Label text="Recently Listened:" />
+      <ScrollPane fitToWidth="true" hbarPolicy="ALWAYS" prefWidth="200.0" vbarPolicy="NEVER">
+         <content>
+            <HBox fx:id="recentContainer" spacing="10.0" />
+         </content>
+      </ScrollPane>
    </children>
 </VBox>

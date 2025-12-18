@@ -74,6 +74,11 @@
     -fx-pref-width: 8px;
 }
 
+.scroll-pane .scroll-bar:horizontal{
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
 .scroll-pane .scroll-bar .track{
     -fx-background-color: rgba(12, 5, 2, .4);
     -fx-background-radius: 10px;
@@ -88,7 +93,7 @@
     -fx-background-color: rgb(153, 98, 57);
 }
 
-.scroll-pane .scroll-bar .increment-button, scroll-pane .scroll-bar .increment-button{
+.scroll-pane .scroll-bar .increment-button, .scroll-pane .scroll-bar .increment-button{
     -fx-background-color: transparent;
     -fx-padding: 0;
 }

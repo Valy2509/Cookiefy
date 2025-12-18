@@ -8,28 +8,34 @@ import dk.easv.cookiefy.gui.MainController;
 import dk.easv.cookiefy.gui.inferfaces.IUserAware;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static dk.easv.cookiefy.gui.util.SceneManager.openWindowWait;
+
+/**
+ * Controller for Library view
+ * Handles managing local songs, playlists and filtering
+ */
 
 public class LibraryController implements Initializable, IUserAware {
 
     @FXML private ListView<Song> localSongsContainer;
     @FXML private ListView<Playlist> playListsContainer;
     @FXML private ListView<Song> plContent;
+    @FXML private TextField filterInput;
+    @FXML private Button filterButton;
 
     private MainController mainController;
 
     private User currUser;
-    private Logic logic = new Logic();
+    private List<Song> allSongs;
+    private Logic logic;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,12 +63,36 @@ public class LibraryController implements Initializable, IUserAware {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+        this.logic = mainController.getLogic();
     }
 
     public void setUser(User user) {
         this.currUser = user;
         updateSongList();
         updatePlList();
+    }
+
+    @FXML public void handleFilter(){
+        if (filterButton.getText().equals("Clear")){
+            filterInput.clear();
+            filterButton.setText("Filter");
+            localSongsContainer.getItems().clear();
+            localSongsContainer.getItems().addAll(allSongs);
+            return;
+        }
+
+        String filter = filterInput.getText().toLowerCase();
+
+        if (filter.isBlank()) return;
+
+        localSongsContainer.getItems().clear();
+        for (Song song : allSongs){
+            if (song.getTrackName().toLowerCase().contains(filter) || song.getArtistName().toLowerCase().contains(filter)){
+                localSongsContainer.getItems().add(song);
+            }
+        }
+
+        filterButton.setText("Clear");
     }
 
     public void addLocalSong(){
@@ -80,6 +110,7 @@ public class LibraryController implements Initializable, IUserAware {
     public void updateSongList() {
         try {
             List<Song> songs = logic.getAllSongs(currUser.getUserId());
+            this.allSongs = songs;
             localSongsContainer.getItems().clear();
             for (Song song : songs) {
                 localSongsContainer.getItems().add(song);
@@ -158,5 +189,27 @@ public class LibraryController implements Initializable, IUserAware {
         if(selectedSong == null || selectedPlaylist == null) return;
         logic.deleteSongPl(selectedPlaylist, selectedSong);
         updateContent(selectedPlaylist);
+    }
+
+    @FXML public void moveUp(){
+        int index = plContent.getSelectionModel().getSelectedIndex();
+        Playlist selectedPlaylist = playListsContainer.getSelectionModel().getSelectedItem();
+
+        if (index > 0 && selectedPlaylist != null) {
+            Collections.swap(plContent.getItems(), index, index - 1);
+            plContent.getSelectionModel().select(index - 1);
+            logic.reorderPlaylist(selectedPlaylist, plContent.getItems());
+        }
+    }
+
+    @FXML public void moveDown(){
+        int index = plContent.getSelectionModel().getSelectedIndex();
+        Playlist selectedPlaylist = playListsContainer.getSelectionModel().getSelectedItem();
+
+        if (index >= 0 && index < plContent.getItems().size() - 1 && selectedPlaylist != null) {
+            Collections.swap(plContent.getItems(), index, index + 1);
+            plContent.getSelectionModel().select(index + 1);
+            logic.reorderPlaylist(selectedPlaylist, plContent.getItems());
+        }
     }
 }

@@ -1,5 +1,10 @@
 package dk.easv.cookiefy.be;
 
+/**
+ * Represents a User entity
+ * Holds data to be used between layers
+ */
+
 public class User {
     private int userId;
     private String name;

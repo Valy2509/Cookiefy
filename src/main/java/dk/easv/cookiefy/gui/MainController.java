@@ -3,8 +3,11 @@ package dk.easv.cookiefy.gui;
 import dk.easv.cookiefy.be.Song;
 import dk.easv.cookiefy.be.User;
 import dk.easv.cookiefy.bll.Logic;
+import dk.easv.cookiefy.gui.components.RecentController;
+import dk.easv.cookiefy.gui.components.SongController;
 import dk.easv.cookiefy.gui.inferfaces.IUserAware;
 import dk.easv.cookiefy.gui.tabs.DiscoverController;
+import dk.easv.cookiefy.gui.tabs.HomeController;
 import dk.easv.cookiefy.gui.tabs.LibraryController;
 import dk.easv.cookiefy.gui.util.BaseController;
 import javafx.fxml.FXML;
@@ -61,13 +64,18 @@ public class MainController extends BaseController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
             Object obj = loader.getController();
-            if (obj instanceof IUserAware){
-                ((IUserAware) obj).setUser(user);
+            if (obj instanceof LibraryController){
                 ((LibraryController) obj).setMainController(this);
-            }
-            if (obj instanceof DiscoverController){
+            }else if(obj instanceof HomeController){
+                ((HomeController) obj).setMainController(this);
+            }else if (obj instanceof DiscoverController){
                 ((DiscoverController) obj).setMainController(this);
             }
+
+            if (obj instanceof IUserAware){
+                ((IUserAware) obj).setUser(user);
+            }
+
             content.getChildren().clear();
             content.getChildren().add(root);
             VBox.setVgrow(root, Priority.ALWAYS);
@@ -82,6 +90,10 @@ public class MainController extends BaseController implements Initializable {
         this.user = user;
     }
 
+    public Logic getLogic() {
+        return logic;
+    }
+
     public void togglePlay(){
         if(logic.isPlayingSong()){
             logic.pauseSong();
@@ -94,14 +106,13 @@ public class MainController extends BaseController implements Initializable {
 
     public void playSong(Song song){
         if (song == null) return;
-
-        logic.playSingleSong(song);
-
+        logic.playSingleSong(song, this.user);
+        logic.addRecentSong(song, user);
         playBtn.setText("⏸");
     }
 
     public void playQueue(List<Song> songs, int startIndex){
-        logic.playQueue(songs, startIndex);
+        logic.playQueue(songs, startIndex, this.user);
     }
 
     public void updateUi(Song song){
@@ -115,11 +126,11 @@ public class MainController extends BaseController implements Initializable {
     }
 
     public void playNext(){
-        logic.nextSong();
+        logic.nextSong(this.user);
     }
 
     public void playPrevious(){
-        logic.prevSong();
+        logic.prevSong(this.user);
     }
 
     public void loadHomePage(){

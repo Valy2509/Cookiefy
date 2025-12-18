@@ -124,5 +124,4 @@ public class SceneManager {
             throw new RuntimeException(e);
         }
     }
-
 }

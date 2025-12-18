@@ -45,6 +45,5 @@ public class RegController extends BaseController implements Initializable {
         }catch(Exception e){
             messageLabel.setText(e.getMessage());
         }
-
     }
 }

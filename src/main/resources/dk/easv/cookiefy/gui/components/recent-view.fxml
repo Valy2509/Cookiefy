@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.cookiefy.gui.components.RecentController">
+   <children>
+      <ImageView fx:id="songThumb" fitHeight="132.0" fitWidth="132.0" pickOnBounds="true">
+         <image>
+            <Image url="@../imgs/notFound.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="titleLabel" />
+   </children>
+</VBox>

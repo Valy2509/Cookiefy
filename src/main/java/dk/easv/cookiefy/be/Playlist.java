@@ -1,5 +1,10 @@
 package dk.easv.cookiefy.be;
 
+/**
+ * Represents a Playlist entity
+ * Holds data to be used between layers
+ */
+
 public class Playlist {
     private int id;
     private String name;

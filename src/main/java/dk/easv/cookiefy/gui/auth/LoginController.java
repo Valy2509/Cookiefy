@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,10 +32,6 @@ public class LoginController extends BaseController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         makeDraggable(titleBar);
-    }
-
-    public void openMusicPlayer() {
-        openNewWindow("Cookiefy", "gui/main-view.fxml");
     }
 
     public void loginAccount() throws Exception {
