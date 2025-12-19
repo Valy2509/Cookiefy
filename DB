@@ -1,0 +1,89 @@
+CREATE TABLE Users (
+                       User_ID INT IDENTITY(1,1) PRIMARY KEY,
+                       Username NVARCHAR(50) NOT NULL,
+                       Email NVARCHAR(255) NOT NULL,
+                       [Password] NVARCHAR(255) NOT NULL,
+                       Created_At DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Songs (
+                       Song_ID INT IDENTITY(1,1) PRIMARY KEY,
+                       Title NVARCHAR(255) NOT NULL,
+                       Artist NVARCHAR(255) NOT NULL,
+                       Duration_Seconds INT NOT NULL,
+
+                       Source_Type NVARCHAR(20) NOT NULL
+                           CHECK (Source_Type IN ('YOUTUBE', 'LOCAL')),
+
+                       Youtube_ID NVARCHAR(50) NULL,
+                       File_Path NVARCHAR(500) NULL,
+                       Thumbnail_URL NVARCHAR(500) NULL,
+
+                       Created_At DATETIME DEFAULT GETDATE(),
+
+                       CONSTRAINT CK_Songs_Source
+                           CHECK (
+                               (Youtube_ID IS NOT NULL AND File_Path IS NULL)
+                                   OR
+                               (Youtube_ID IS NULL AND File_Path IS NOT NULL)
+                               )
+);
+
+CREATE TABLE User_History (
+                              History_ID INT IDENTITY(1,1) PRIMARY KEY,
+                              User_ID INT NOT NULL,
+                              Song_ID INT NOT NULL,
+                              Played_At DATETIME DEFAULT GETDATE(),
+
+                              CONSTRAINT FK_History_User FOREIGN KEY (User_ID)
+                                  REFERENCES Users(User_ID),
+
+                              CONSTRAINT FK_History_Song FOREIGN KEY (Song_ID)
+                                  REFERENCES Songs(Song_ID)
+);
+
+CREATE TABLE User_Favorites (
+                                User_ID INT NOT NULL,
+                                Song_ID INT NOT NULL,
+
+                                CONSTRAINT PK_Favorites PRIMARY KEY (User_ID, Song_ID),
+
+                                CONSTRAINT FK_Favorites_User FOREIGN KEY (User_ID)
+                                    REFERENCES Users(User_ID),
+
+                                CONSTRAINT FK_Favorites_Song FOREIGN KEY (Song_ID)
+                                    REFERENCES Songs(Song_ID)
+);
+
+CREATE TABLE Playlists (
+                           Playlist_ID INT IDENTITY(1,1) PRIMARY KEY,
+                           User_ID INT NOT NULL,
+                           Name NVARCHAR(255) NOT NULL,
+                           Created_At DATETIME DEFAULT GETDATE(),
+
+                           CONSTRAINT FK_Playlist_User FOREIGN KEY (User_ID)
+                               REFERENCES Users(User_ID)
+);
+
+CREATE TABLE Playlist_Songs (
+                                PSongs_ID INT IDENTITY(1,1) PRIMARY KEY,
+                                Playlist_ID INT NOT NULL,
+                                Song_ID INT NOT NULL,
+                                Position INT NOT NULL,
+
+                                CONSTRAINT FK_PS_Playlist FOREIGN KEY (Playlist_ID)
+                                    REFERENCES Playlists(Playlist_ID)
+                                    ON DELETE CASCADE,
+
+                                CONSTRAINT FK_PS_Song FOREIGN KEY (Song_ID)
+                                    REFERENCES Songs(Song_ID)
+);
+
+CREATE TABLE API_Logs (
+                          API_ID INT IDENTITY(1,1) PRIMARY KEY,
+                          Youtube_ID NVARCHAR(50),
+                          Response_Code INT,
+                          Message NVARCHAR(500),
+                          Fetched_At DATETIME DEFAULT GETDATE()
+);
+
